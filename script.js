@@ -134,7 +134,6 @@ function generateSudokuGrid() {
     const dropdownContainer = document.getElementById('dropdown-container');
     const sudokuGrid = document.getElementById('sudoku-grid');
 
-    // Create dropdown menu
     const dropdown = document.createElement('select');
     const difficulties = [
         { label: 'Easy', holes: 20 },
@@ -157,9 +156,8 @@ function generateSudokuGrid() {
 
     dropdownContainer.appendChild(dropdown);
 
-    // Function to create the Sudoku board
     function createSudokuBoard(numHoles) {
-        sudokuGrid.innerHTML = ''; // Clear previous grid
+        sudokuGrid.innerHTML = '';
 
         const [puzzleBoard, solvedBoard] = generateSudoku(numHoles);
 
@@ -177,12 +175,13 @@ function generateSudokuGrid() {
                 cell.contentEditable = true;
                 cell.addEventListener('input', function(event) {
                     var enteredValue = event.target.textContent.trim();
-                    if (enteredValue.toString().includes('0')) {event.target.textContent = ''; return;}
-                    if (!isNumeric(enteredValue)) {event.target.textContent='';return;}
+                    if (enteredValue.toString().includes('0')) {event.target.textContent = ''; event.target.style.backgroundColor = 'white'; return;}
+                    if (!isNumeric(enteredValue)) {event.target.textContent=''; event.target.style.backgroundColor = 'white'; return;}
                     cell.addEventListener('keydown', function(event) {
                         const key = event.key;
                         if (key === "Backspace" || key === "Delete") {
                             event.target.textContent = '';
+                            event.target.style.backgroundColor = 'white';
                             return;
                         }
                     });
@@ -197,6 +196,7 @@ function generateSudokuGrid() {
                     }
                     else if (enteredValue.length !== 1 || isNaN(enteredValue)) {
                         event.target.textContent = '';
+                        event.target.style.backgroundColor = 'transparent';
                         return;
                     }
     
@@ -232,9 +232,9 @@ function generateSudokuGrid() {
         }
     }
 
-    // Generate initial board with default difficulty
-    createSudokuBoard(difficulties[0].holes);
+    createSudokuBoard(difficulties[0].holes);    
 }
 
-// Call the function to create Sudoku grid and dropdown on page load
 generateSudokuGrid();
+
+
