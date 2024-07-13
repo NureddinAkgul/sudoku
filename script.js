@@ -130,7 +130,27 @@ function isNumeric(value) {
     return /^\d+$/.test(value);
 }
 
+let timerInterval;
+let totalTimeInSeconds = 0;
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+        totalTimeInSeconds++;
+        const minutes = Math.floor(totalTimeInSeconds / 60);
+        const seconds = totalTimeInSeconds % 60;
+        document.getElementById('timer').textContent =
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+    totalTimeInSeconds = 0;
+    console.log('stopped');
+}
+
 function generateSudokuGrid() {
+    startTimer();
     const dropdownContainer = document.getElementById('dropdown-container');
     const sudokuGrid = document.getElementById('sudoku-grid');
 
@@ -151,6 +171,7 @@ function generateSudokuGrid() {
 
     dropdown.addEventListener('change', () => {
         const selectedHoles = parseInt(dropdown.value);
+        totalTimeInSeconds = 0;
         createSudokuBoard(selectedHoles);
     });
 

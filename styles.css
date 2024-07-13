@@ -1,3 +1,10 @@
+.sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 80px);
+    grid-template-rows: repeat(9, 80px);
+    gap: 1px;
+}
+
 body {
     display: flex;
     justify-content: center;
@@ -7,11 +14,16 @@ body {
     background-color: #f0f0f0;
 }
 
-.sudoku-grid {
-    display: grid;
-    grid-template-columns: repeat(9, 80px);
-    grid-template-rows: repeat(9, 80px);
-    gap: 1px;
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#timer {
+    font-size: 30px;
+    font-family: Arial, sans-serif;
 }
 
 .sudoku-cell {
