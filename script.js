@@ -149,6 +149,27 @@ function stopTimer() {
     console.log('stopped');
 }
 
+function highlightCells(cell) {
+    cell.addEventListener('click', function(event) {
+        let parent = event.target.parentElement;
+        for (let c in parent.children) {
+
+            if (!parent.children[c].className.includes('correct') && !parent.children[c].className.includes('incorrect')) {
+                if (parent.children[c].getAttribute('data-row') == event.target.getAttribute('data-row') || parent.children[c].getAttribute('data-col') == event.target.getAttribute('data-col') ) { 
+                    parent.children[c].style.backgroundColor = 'rgb(240, 240, 240)';
+                }
+                else {
+                    parent.children[c].style.backgroundColor = 'white';
+                    }
+                        if (parent.children[c].textContent == event.target.textContent && isNumeric(event.target.textContent)) {
+                            parent.children[c].style.backgroundColor = 'rgb(190, 190, 190)';
+                        }
+                    }
+
+            }
+        });
+}
+
 function generateSudokuGrid() {
     startTimer();
     const dropdownContainer = document.getElementById('dropdown-container');
@@ -191,19 +212,7 @@ function generateSudokuGrid() {
 
             const row = Math.floor((i - 1) / 9);
             const col = (i - 1) % 9;
-            cell.addEventListener('click', function(event) {
-                let parent = event.target.parentElement;
-                for (let c in parent.children) {
-                    if (!parent.children[c].className.includes('correct')) {
-                        if (parent.children[c].getAttribute('data-row') == event.target.getAttribute('data-row') || parent.children[c].getAttribute('data-col') == event.target.getAttribute('data-col') ) { 
-                            parent.children[c].style.backgroundColor = 'rgb(235, 240, 240)';
-                        }
-                        else {
-                            parent.children[c].style.backgroundColor = 'white';
-                            }
-                        }
-                    }
-                });
+            highlightCells(cell);
             if (puzzleBoard[row][col] === 0) {
                 cell.contentEditable = true;
                 cell.addEventListener('input', function(event) {
@@ -243,10 +252,12 @@ function generateSudokuGrid() {
                         event.target.textContent = newValue;
                         if (newValue !== solvedBoard[row][col]) {
                             event.target.style.backgroundColor = 'red';
+                            event.target.classList.add('incorrect');
                         } else {
-                            cell.style.backgroundColor = 'rgb(203, 225, 171)';
+                            cell.style.backgroundColor = 'rgb(240, 240, 240)';
                             cell.classList.add("correct");
                             cell.contentEditable = false;
+                            highlightCells(cell);
                         }
                     }
                 });
