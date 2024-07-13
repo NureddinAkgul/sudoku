@@ -141,6 +141,13 @@ function createSudokuGrid() {
             
             cell.addEventListener('input', function(event) {
                 var enteredValue = event.target.textContent.trim();
+                cell.addEventListener('keydown', function(event) {
+                    const key = event.key;
+                    if (key === "Backspace" || key === "Delete") {
+                        event.target.textContent = '';
+                        return;
+                    }
+                });
                 if (enteredValue < 1 || enteredValue > 9) {
   
                     let myFunc = num => Number(num);
