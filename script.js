@@ -126,6 +126,9 @@ function shuffleArray(array) {
 
 const sudokuGrid = document.getElementById('sudoku-grid');
 
+function isNumeric(value) {
+    return /^\d+$/.test(value);
+}
 
 function generateSudokuGrid() {
     const dropdownContainer = document.getElementById('dropdown-container');
@@ -175,6 +178,7 @@ function generateSudokuGrid() {
                 cell.addEventListener('input', function(event) {
                     var enteredValue = event.target.textContent.trim();
                     if (enteredValue.toString().includes('0')) {event.target.textContent = ''; return;}
+                    if (!isNumeric(enteredValue)) {event.target.textContent='';return;}
                     cell.addEventListener('keydown', function(event) {
                         const key = event.key;
                         if (key === "Backspace" || key === "Delete") {
