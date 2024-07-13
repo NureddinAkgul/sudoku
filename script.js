@@ -191,7 +191,19 @@ function generateSudokuGrid() {
 
             const row = Math.floor((i - 1) / 9);
             const col = (i - 1) % 9;
-
+            cell.addEventListener('click', function(event) {
+                let parent = event.target.parentElement;
+                for (let c in parent.children) {
+                    if (!parent.children[c].className.includes('correct')) {
+                        if (parent.children[c].getAttribute('data-row') == event.target.getAttribute('data-row') || parent.children[c].getAttribute('data-col') == event.target.getAttribute('data-col') ) { 
+                            parent.children[c].style.backgroundColor = 'rgb(235, 240, 240)';
+                        }
+                        else {
+                            parent.children[c].style.backgroundColor = 'white';
+                            }
+                        }
+                    }
+                });
             if (puzzleBoard[row][col] === 0) {
                 cell.contentEditable = true;
                 cell.addEventListener('input', function(event) {
@@ -217,7 +229,7 @@ function generateSudokuGrid() {
                     }
                     else if (enteredValue.length !== 1 || isNaN(enteredValue)) {
                         event.target.textContent = '';
-                        event.target.style.backgroundColor = 'transparent';
+                        event.target.style.backgroundColor = 'white';
                         return;
                     }
     
@@ -232,7 +244,8 @@ function generateSudokuGrid() {
                         if (newValue !== solvedBoard[row][col]) {
                             event.target.style.backgroundColor = 'red';
                         } else {
-                            event.target.style.backgroundColor = 'transparent';
+                            cell.style.backgroundColor = 'rgb(203, 225, 171)';
+                            cell.classList.add("correct");
                             cell.contentEditable = false;
                         }
                     }
